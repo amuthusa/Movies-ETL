@@ -14,3 +14,21 @@
 ### Load:
 
   Once the data is cleaned and formated to our need we had to load into SQL tables for further analysis. This is the final step before we can start our data analysis and prediction. Jupyter notebook and python have a module named sqlalchemy to load the data into the sql table, since we have huge ratings data we had to chunk the data to load into the table
+
+## Challenge:
+
+### Overview:
+    
+   Refactor the code and make it more modular to transform and load the data to SQL from one function.
+
+### Details:
+
+   Created functions to add alternate tile field even if one of the attributes like 'Also known as' or language-specific attribute is populated. Found some of the common attributes with different names and changed the name for example 'Directed by' and 'Director' is one and the same so changed to 'Director'. Created imdb_id from the imdb_link and removed duplicate movies with the same imdb_id.
+   
+   Removed columns that didn't have values for more than 90% of the records assuming it won't play a major role in our predictions. Normalized cost-related columns like box_office and budget from different formats like million, billion, millon, dollar amount to plain dollar amount so that we can could statistics on those data. Formated release date from multiple formats to DateTime format which would help in our analysis. We also standardized on running time of the movie.
+   
+   Formatted Kaggle data so that it would be easy for the merge like the budget is converted as int, id is converted to an integer, popularity is converted to int and release_date is converted to a date. Merged both Wikipedia movies data and kaggle movies date with suffixes based on imdb_id.
+   
+   Carefully combed through the data to look for columns that can be dropped in the merged data frame. Using the scatter plot and compared some of the common data like running_time / runtime, budget_wiki / budget_kaggle, box_office / revenue to see which column makes sense. For all of the above columns, Kaggle data seems to be much better suited than Wikipedia data but for the missing data, we do take it from Wikipedia. Dropped some of the columns from Wikipedia like title_wiki, release_date_wiki, Language, Production company and used Kaggle data.
+   
+   Once the data is transformed we filtered the columns we are interested in and renamed some of them. This gave us consolidated movie data. Now moving on to rating data we grouped by movieId and rating and found the number of users who gave the rating, this would allow us to figure out the popularity. The number of users giving higher ratings conveys the movie is popular and similar kinds of movies might be a hit with users. Merged the movie's data and rating data to get a full picture of the reviews from Wikipedia and kaggle.
