@@ -19,15 +19,15 @@
 
 ### Overview:
     
-   Refactor the code and make it more modular to transform and load the data to SQL from one function.
+   Refactor the code and make it more modular to extract movies data, transform and load the data to SQL using python function.
 
-### Details:
+### Details on trnsformation and loading:
 
-   Created functions to add alternate tile field even if one of the attributes like 'Also known as' or language-specific attribute is populated. Found some of the common attributes with different names and changed the name for example 'Directed by' and 'Director' is one and the same so changed to 'Director'. Created imdb_id from the imdb_link and removed duplicate movies with the same imdb_id.
+   Created functions to add alternate title field based on columns like 'Also known as' or language-specific column like 'Chinese/Cantonese' etc. Found some of the common attributes with different names and changed the name for example 'Directed by' and 'Director' is one and the same so changed to 'Director'. Created imdb_id from the imdb_link and removed duplicate movies with the same imdb_id.
    
    Removed columns that didn't have values for more than 90% of the records assuming it won't play a major role in our predictions. Normalized cost-related columns like box_office and budget from different formats like million, billion, millon, dollar amount to plain dollar amount so that we can could statistics on those data. Formated release date from multiple formats to DateTime format which would help in our analysis. We also standardized on running time of the movie.
    
-   Formatted Kaggle data so that it would be easy for the merge like the budget is converted as int, id is converted to an integer, popularity is converted to int and release_date is converted to a date. Merged both Wikipedia movies data and kaggle movies date with suffixes based on imdb_id.
+   Formatted Kaggle data so that it would be easy for the merge like the budget, id, popularity is converted to an int and release_date is converted to a date. Merged both Wikipedia movies data and Kaggle movies date based on imdb_id and added corresponding suffixes.
    
    Carefully combed through the data to look for columns that can be dropped in the merged data frame. Using the scatter plot and compared some of the common data like running_time / runtime, budget_wiki / budget_kaggle, box_office / revenue to see which column makes sense. For all of the above columns, Kaggle data seems to be much better suited than Wikipedia data but for the missing data, we do take it from Wikipedia. Dropped some of the columns from Wikipedia like title_wiki, release_date_wiki, Language, Production company and used Kaggle data.
    
